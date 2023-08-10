@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:note_x/constants/routes.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -28,7 +29,10 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return RegisterWidget(email: _email, password: _password,);
+    return RegisterWidget(
+      email: _email,
+      password: _password,
+    );
   }
 }
 
@@ -61,8 +65,8 @@ class RegisterWidget extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/dash.png',
-                width: 100,
-                height: 100,
+                width: 70,
+                height: 70,
               ),
               const SizedBox(
                 height: 20,
@@ -91,11 +95,11 @@ class RegisterWidget extends StatelessWidget {
                   try {
                     final email = _email.text;
                     final password = _password.text;
-    
+
                     final userCredential = await FirebaseAuth.instance
                         .createUserWithEmailAndPassword(
                             email: email, password: password);
-    
+
                     //print(userCredential);
                   } on FirebaseAuthException catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -119,17 +123,17 @@ class RegisterWidget extends StatelessWidget {
                 ),
               ),
               TextButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/login/', (route) => false);
-              },
-              child: const Text(
-                'Already registered? Login here!',
-                style: TextStyle(
-                  fontSize: 16,
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                },
+                child: const Text(
+                  'Already registered? Login here!',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
-            ),
             ],
           ),
         ),

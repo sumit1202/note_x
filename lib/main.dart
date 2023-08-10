@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:note_x/constants/routes.dart';
 import 'package:note_x/firebase_options.dart';
 import 'package:note_x/views/login_view.dart';
 import 'package:note_x/views/notex_view.dart';
@@ -33,8 +34,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
+        registerRoute: (context) => const RegisterView(),
+        loginRoute: (context) => const LoginView(),
+        notexRoute: (context) => const NotexView(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:note_x/constants/routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -59,8 +60,8 @@ class LoginWidget extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/dash.png',
-                width: 100,
-                height: 100,
+                width: 70,
+                height: 70,
               ),
               const SizedBox(
                 height: 20,
@@ -90,10 +91,14 @@ class LoginWidget extends StatelessWidget {
                   final password = _password.text;
 
                   try {
-                    final userCredential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: email, password: password);
-                    print(userCredential);
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      notexRoute,
+                      (route) => false,
+                    );
                   } on FirebaseAuthException catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -117,8 +122,10 @@ class LoginWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/register/', (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    registerRoute,
+                    (route) => false,
+                  );
                 },
                 child: const Text(
                   'Not yet registered? Register here!',
