@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_x/constants/routes.dart';
+import 'package:note_x/utils/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -100,17 +101,19 @@ class LoginWidget extends StatelessWidget {
                       (route) => false,
                     );
                   } on FirebaseAuthException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Oops! : ${e.code} : ${e.message}"),
-                      ),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text("Oops! : ${e.code} : ${e.message}"),
+                    //   ),
+                    // );
+                    await showErrorDialog(context, 'Oops! ${e.code}');
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Oops! : $e"),
-                      ),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text("Oops! : $e"),
+                    //   ),
+                    // );
+                    await showErrorDialog(context, 'Oops! $e');
                   }
                 },
                 child: const Text(
@@ -141,3 +144,5 @@ class LoginWidget extends StatelessWidget {
     );
   }
 }
+
+
