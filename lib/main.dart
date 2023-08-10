@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:note_x/firebase_options.dart';
+import 'package:note_x/views/login_view.dart';
+import 'package:note_x/views/register_view.dart';
+import 'package:note_x/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
@@ -28,6 +31,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      routes: {
+        '/login/': (context) => const LoginView(),
+        '/register/': (context) => const RegisterView(),
+      },
     );
   }
 }
@@ -59,36 +66,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Note X',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if (user?.emailVerified ?? false) {
-                print('Verified user');
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = FirebaseAuth.instance.currentUser;
+            if (user != null) {
+              if (user.emailVerified) {
+                print('verified email');
               } else {
-                print('Not verified user');
+                return const VerifyEmailView();
               }
-              return Container();
-            default:
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-          }
-        },
-      ),
+            } else {
+              return const LoginView();
+            }
+            return Image.asset('assets/images/dash.png');
+
+          default:
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+        }
+      },
     );
   }
 }
