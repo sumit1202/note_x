@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:note_x/firebase_options.dart';
 import 'package:note_x/views/login_view.dart';
+import 'package:note_x/views/notex_view.dart';
 import 'package:note_x/views/register_view.dart';
 import 'package:note_x/views/verify_email_view.dart';
 
@@ -76,15 +77,13 @@ class _HomePageState extends State<HomePage> {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                print('verified email');
+                return const NotexView();
               } else {
                 return const VerifyEmailView();
               }
             } else {
               return const LoginView();
             }
-            return Image.asset('assets/images/dash.png');
-
           default:
             return const Center(
               child: CircularProgressIndicator.adaptive(),
