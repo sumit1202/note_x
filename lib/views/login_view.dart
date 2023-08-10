@@ -96,24 +96,34 @@ class LoginWidget extends StatelessWidget {
                       email: email,
                       password: password,
                     );
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      notexRoute,
-                      (route) => false,
-                    );
+                    final user = FirebaseAuth.instance.currentUser;
+                    if (user?.emailVerified ?? false) {
+                      //user's email is verified
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        notexRoute,
+                        (route) => false,
+                      );
+                    } else {
+                      //user's email is not verified
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        verifyEmailRoute,
+                        (route) => false,
+                      );
+                    }
                   } on FirebaseAuthException catch (e) {
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
                     //     content: Text("Oops! : ${e.code} : ${e.message}"),
                     //   ),
                     // );
-                    await showErrorDialog(context, 'Oops! ${e.code}');
+                    await showErrorDialog(context, 'Oops! ${e.code}.');
                   } catch (e) {
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
                     //     content: Text("Oops! : $e"),
                     //   ),
                     // );
-                    await showErrorDialog(context, 'Oops! $e');
+                    await showErrorDialog(context, 'Oops! $e.');
                   }
                 },
                 child: const Text(
@@ -144,5 +154,3 @@ class LoginWidget extends StatelessWidget {
     );
   }
 }
-
-
