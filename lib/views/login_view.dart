@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_x/constants/routes.dart';
+import 'package:note_x/services/auth/auth_exceptions.dart';
+import 'package:note_x/services/auth/auth_service.dart';
 import 'package:note_x/utils/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -92,12 +93,10 @@ class LoginWidget extends StatelessWidget {
                   final password = _password.text;
 
                   try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                    final user = FirebaseAuth.instance.currentUser;
-                    if (user?.emailVerified ?? false) {
+                    await AuthService.firebase()
+                        .logIn(email: email, password: password);
+                    final user = AuthService.firebase().currentUser;
+                    if (user?.isEmailVerified ?? false) {
                       //user's email is verified
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         notexRoute,
@@ -110,20 +109,12 @@ class LoginWidget extends StatelessWidget {
                         (route) => false,
                       );
                     }
-                  } on FirebaseAuthException catch (e) {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: Text("Oops! : ${e.code} : ${e.message}"),
-                    //   ),
-                    // );
-                    await showErrorDialog(context, 'Oops! ${e.code}.');
-                  } catch (e) {
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: Text("Oops! : $e"),
-                    //   ),
-                    // );
-                    await showErrorDialog(context, 'Oops! $e.');
+                  } on UserNotFoundAuthException {
+                    await showErrorDialog(context, 'User not found');
+                  } on WrongPasswordAuthException {
+                    await showErrorDialog(context, 'Wrong password');
+                  }on GenericAuthException {
+                    await showErrorDialog(context, 'Authentication error');
                   }
                 },
                 child: const Text(

@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_x/constants/routes.dart';
+import 'package:note_x/enums/menu_action.dart';
+import 'package:note_x/services/auth/auth_service.dart';
 //import 'dart:developer' as dartlog show log;
-
-enum MenuAction { logout }
 
 class NotexView extends StatefulWidget {
   const NotexView({super.key});
@@ -31,13 +30,11 @@ class _NotexViewState extends State<NotexView> {
               ];
             },
             onSelected: (value) async {
-              //log(value.toString());
-              //print('$value');
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
-                    await FirebaseAuth.instance.signOut();
+                    await AuthService.firebase().logOut();
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                   }
