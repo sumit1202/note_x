@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:note_x/services/crud/notes_service.dart';
 import 'package:note_x/utils/dialogs/delete_dialog.dart';
 
-typedef DeleteNoteCallback = void Function(DatabaseNote note);
+typedef NoteCallback = void Function(DatabaseNote note);
 
 class NotexGridView extends StatelessWidget {
   final List<DatabaseNote> notes;
-  final DeleteNoteCallback onDeleteNote;
-  const NotexGridView(
-      {super.key, required this.notes, required this.onDeleteNote});
+  final NoteCallback onDeleteNote;
+  final NoteCallback onTapNote;
+
+  const NotexGridView({
+    super.key,
+    required this.notes,
+    required this.onDeleteNote,
+    required this.onTapNote,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +40,11 @@ class NotexGridView extends StatelessWidget {
                     onDeleteNote(note);
                   }
                 },
+                onTap: () {
+                  onTapNote(note);
+                },
                 child: GridTile(
-                  // footer: IconButton(
-                  //   onPressed: () async {
-                  //     final bool shouldDelete = await showDeleteDialog(context);
-                  //     if (shouldDelete) {
-                  //       onDeleteNote(note);
-                  //     }
-                  //   },
-                  //   icon: const Icon(
-                  //     Icons.close,
-                  //     //color: Colors.red,
-                  //   ),
-                  // ),
+                  // header: Text('Note #${index + 1}:'),
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(

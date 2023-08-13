@@ -2,4 +2,4 @@ const String registerRoute = '/register/';
 const String loginRoute = '/login/';
 const String notexRoute = '/notex/';
 const String verifyEmailRoute = '/verify-email/';
-const String newNoteRoute = '/notex/new-note';
+const String createOrUpdateNoteRoute = '/notex/note';
