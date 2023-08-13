@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:note_x/extensions/list/filter.dart';
 import 'package:note_x/services/crud/crud_exceptions.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
@@ -39,6 +40,7 @@ const createNoteTable = '''
 class NotesService {
   Database? _db;
 
+  DatabaseUser? _user;
   //local cache
   List<DatabaseNote> _notesList = [];
 
@@ -57,14 +59,32 @@ class NotesService {
 
   late final StreamController<List<DatabaseNote>> _notesStreamController;
 
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes =>
+      _notesStreamController.stream.filter((note) {
+        final currentuser = _user;
+        if (currentuser != null) {
+          return (note.userId == currentuser.id);
+        } else {
+          throw UserShouldBeSetBeforeReadingAllNotesException();
+        }
+      });
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+  //get Or Create User
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+  }) async {
     try {
       final user = await getUser(email: email);
+      if (setAsCurrentUser) {
+        _user = user;
+      }
       return user;
     } on CouldNotFindUserException {
       final createduser = await createUser(email: email);
+      if (setAsCurrentUser) {
+        _user = createduser;
+      }
       return createduser;
     } catch (e) {
       rethrow;
@@ -208,10 +228,14 @@ class NotesService {
     //ensure note exists
     await getNote(id: note.id);
     //update db
-    final updateCount = await db.update(noteTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0,
-    });
+    final updateCount = await db.update(
+        noteTable,
+        {
+          textColumn: text,
+          isSyncedWithCloudColumn: 0,
+        },
+        where: 'id = ?',
+        whereArgs: [note.id]);
     if (updateCount == 0) {
       throw CouldNotUpdateNoteException();
     } else {
