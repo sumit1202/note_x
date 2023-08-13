@@ -24,12 +24,6 @@ class _NotexViewState extends State<NotexView> {
   }
 
   @override
-  void dispose() {
-    _notesService.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -80,8 +74,44 @@ class _NotexViewState extends State<NotexView> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                     case ConnectionState.active:
-                      return const Center(
-                          child: Text('waiting for all notes...'));
+                      if (snapshot.hasData) {
+                        final allNotes = snapshot.data;
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: allNotes!.length,
+                            itemBuilder: (context, index) {
+                              final note = allNotes[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  elevation: 1,
+                                  child: GridTile(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Text(
+                                        note.text,
+                                        maxLines: 8,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                            child: CircularProgressIndicator.adaptive());
+                      }
                     default:
                       return const Center(
                           child: CircularProgressIndicator.adaptive());

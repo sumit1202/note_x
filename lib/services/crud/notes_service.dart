@@ -37,28 +37,34 @@ const createNoteTable = '''
 //db_service-------------------------------------------------------------------------//
 
 class NotesService {
-
-  //Singleton class
-  //private constructor
-  NotesService._sharedInstance();
-  static final _shared = NotesService._sharedInstance();
-  factory NotesService() => _shared;
-
   Database? _db;
 
   //local cache
   List<DatabaseNote> _notesList = [];
-  final _notesStreamController =
-      StreamController<List<DatabaseNote>>.broadcast();
+
+  //Singleton class
+  //private constructor
+  static final NotesService _shared = NotesService._sharedInstance();
+  NotesService._sharedInstance() {
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.sink.add(_notesList);
+      },
+    );
+  }
+
+  factory NotesService() => _shared;
+
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {
     try {
-      final user = getUser(email: email);
+      final user = await getUser(email: email);
       return user;
     } on CouldNotFindUserException {
-      final createduser = createUser(email: email);
+      final createduser = await createUser(email: email);
       return createduser;
     } catch (e) {
       rethrow;
@@ -285,7 +291,7 @@ class DatabaseUser {
         email = map[emailColumn] as String;
 
   @override
-  String toString() => 'DatabaseUser(id: $id, email: $email)';
+  String toString() => 'DatabaseUser -> (id: $id, email: $email)';
 
   @override
   bool operator ==(covariant DatabaseUser other) {
@@ -319,7 +325,7 @@ class DatabaseNote {
 
   @override
   String toString() {
-    return 'id: $id, userId: $userId, isSyncedwithCloud: $isSyncedWithCloud, text: $text';
+    return 'Note -> id: $id, userId: $userId, isSyncedwithCloud: $isSyncedWithCloud, text: $text';
   }
 
   @override
