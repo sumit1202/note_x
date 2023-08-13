@@ -3,6 +3,8 @@ import 'package:note_x/constants/routes.dart';
 import 'package:note_x/enums/menu_action.dart';
 import 'package:note_x/services/auth/auth_service.dart';
 import 'package:note_x/services/crud/notes_service.dart';
+import 'package:note_x/utils/dialogs/logout_dialog.dart';
+import 'package:note_x/views/notes/notex_grid_view.dart';
 //import 'dart:developer' as dartlog show log;
 
 class NotexView extends StatefulWidget {
@@ -75,38 +77,12 @@ class _NotexViewState extends State<NotexView> {
                     case ConnectionState.waiting:
                     case ConnectionState.active:
                       if (snapshot.hasData) {
-                        final allNotes = snapshot.data;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2),
-                            itemCount: allNotes!.length,
-                            itemBuilder: (context, index) {
-                              final note = allNotes[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  elevation: 1,
-                                  child: GridTile(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        note.text,
-                                        maxLines: 8,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                        final allNotes = snapshot.data!;
+                        return NotexGridView(
+                          notes: allNotes,
+                          onDeleteNote: (note) async {
+                            await _notesService.deleteNote(id: note.id);
+                          },
                         );
                       } else {
                         return const Center(
@@ -125,30 +101,4 @@ class _NotexViewState extends State<NotexView> {
       ),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('Logout'),
-          ),
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }
