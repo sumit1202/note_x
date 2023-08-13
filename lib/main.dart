@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:note_x/constants/routes.dart';
 import 'package:note_x/services/auth/auth_service.dart';
 import 'package:note_x/views/login_view.dart';
-import 'package:note_x/views/notex_view.dart';
+import 'package:note_x/views/notes/new_note_view.dart';
+import 'package:note_x/views/notes/notex_view.dart';
 import 'package:note_x/views/register_view.dart';
 import 'package:note_x/views/verify_email_view.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         verifyEmailRoute: (context) => const VerifyEmailView(),
         loginRoute: (context) => const LoginView(),
         notexRoute: (context) => const NotexView(),
+        newNoteRoute: (context) => const NewNoteView(),
       },
     );
   }

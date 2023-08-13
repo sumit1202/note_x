@@ -51,7 +51,7 @@ class LoginWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Note X',
+          'Login',
         ),
       ),
       body: Center(
@@ -113,7 +113,7 @@ class LoginWidget extends StatelessWidget {
                     await showErrorDialog(context, 'User not found');
                   } on WrongPasswordAuthException {
                     await showErrorDialog(context, 'Wrong password');
-                  }on GenericAuthException {
+                  } on GenericAuthException {
                     await showErrorDialog(context, 'Authentication error');
                   }
                 },

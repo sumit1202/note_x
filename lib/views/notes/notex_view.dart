@@ -37,6 +37,12 @@ class _NotexViewState extends State<NotexView> {
           'Note X',
         ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             itemBuilder: (context) {
               return const [
@@ -73,6 +79,7 @@ class _NotexViewState extends State<NotexView> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
+                    case ConnectionState.active:
                       return const Center(
                           child: Text('waiting for all notes...'));
                     default:
