@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:note_x/services/crud/notes_service.dart';
+import 'package:note_x/services/cloud/cloud_note.dart';
 import 'package:note_x/utils/dialogs/delete_dialog.dart';
 
-typedef NoteCallback = void Function(DatabaseNote note);
+// typedef NoteCallback = void Function(DatabaseNote note);
+typedef NoteCallback = void Function(CloudNote note);
 
 class NotexGridView extends StatelessWidget {
-  final List<DatabaseNote> notes;
+  // final List<DatabaseNote> notes;
+  final Iterable<CloudNote> notes;
   final NoteCallback onDeleteNote;
   final NoteCallback onTapNote;
 
@@ -25,7 +27,8 @@ class NotexGridView extends StatelessWidget {
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: notes.length,
         itemBuilder: (context, index) {
-          final note = notes[index];
+          // final note = notes[index];
+          final note = notes.elementAt(index);
           return Padding(
             padding: const EdgeInsets.all(3.0),
             child: Card(

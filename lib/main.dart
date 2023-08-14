@@ -23,12 +23,18 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: ThemeData(
         colorScheme: const ColorScheme.light(),
-        appBarTheme: const AppBarTheme(color: Colors.deepPurple),
+        appBarTheme: const AppBarTheme(
+          color: Colors.deepPurple,
+          iconTheme: IconThemeData(color: Colors.white),
+          foregroundColor: Colors.white,
+        ),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: const ColorScheme.dark(),
-        appBarTheme: const AppBarTheme(color: Colors.black),
+        appBarTheme: const AppBarTheme(
+          color: Colors.black,
+        ),
         useMaterial3: true,
       ),
       home: const HomePage(),
