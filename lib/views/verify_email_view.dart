@@ -15,8 +15,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Note X',
+          'Verify',
         ),
+        //centerTitle: true,
       ),
       body: Center(
         child: Padding(

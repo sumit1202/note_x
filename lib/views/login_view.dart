@@ -53,6 +53,7 @@ class LoginWidget extends StatelessWidget {
         title: const Text(
           'Login',
         ),
+        //centerTitle: true,
       ),
       body: Center(
         child: Padding(

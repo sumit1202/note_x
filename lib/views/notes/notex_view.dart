@@ -34,6 +34,7 @@ class _NotexViewState extends State<NotexView> {
         title: const Text(
           'Note X',
         ),
+        //centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {

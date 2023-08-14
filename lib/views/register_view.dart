@@ -58,6 +58,7 @@ class RegisterWidget extends StatelessWidget {
         title: const Text(
           'Register',
         ),
+        //centerTitle: true,
       ),
       body: Center(
         child: Padding(
