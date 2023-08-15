@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_x/constants/routes.dart';
 import 'package:note_x/services/auth/auth_exceptions.dart';
-import 'package:note_x/services/auth/auth_service.dart';
 import 'package:note_x/services/auth/bloc/auth_bloc.dart';
 import 'package:note_x/services/auth/bloc/auth_event.dart';
+import 'package:note_x/services/auth/bloc/auth_state.dart';
 import 'package:note_x/utils/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -91,27 +91,32 @@ class LoginWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              TextButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) async {
+                  if (state is AuthStateLoggedOut) {
+                    if (state.exception is UserNotFoundAuthException) {
+                      await showErrorDialog(context, 'User not found');
+                    } else if (state.exception is WrongPasswordAuthException) {
+                      await showErrorDialog(context, 'Wrong credentials');
+                    } else if (state.exception is GenericAuthException) {
+                      await showErrorDialog(context, 'Authentication error');
+                    }
+                  }
+                },
+                child: TextButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
 
-                  try {
                     context.read<AuthBloc>().add(
                           AuthEventLogin(email, password),
                         );
-                  } on UserNotFoundAuthException {
-                    await showErrorDialog(context, 'User not found');
-                  } on WrongPasswordAuthException {
-                    await showErrorDialog(context, 'Wrong password');
-                  } on GenericAuthException {
-                    await showErrorDialog(context, 'Authentication error');
-                  }
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 18,
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),

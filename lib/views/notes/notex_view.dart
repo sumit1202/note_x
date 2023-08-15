@@ -61,9 +61,6 @@ class _NotexViewState extends State<NotexView> {
                   if (shouldLogout) {
                     context.read<AuthBloc>().add(const AuthEventLogout());
                   }
-
-                  break;
-                default:
               }
             },
           )
