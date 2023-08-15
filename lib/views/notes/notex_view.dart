@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_x/constants/routes.dart';
 import 'package:note_x/enums/menu_action.dart';
 import 'package:note_x/services/auth/auth_service.dart';
+import 'package:note_x/services/auth/bloc/auth_bloc.dart';
+import 'package:note_x/services/auth/bloc/auth_event.dart';
 import 'package:note_x/services/cloud/firebase_cloud_storage.dart';
 import 'package:note_x/utils/dialogs/logout_dialog.dart';
 import 'package:note_x/views/notes/notex_grid_view.dart';
@@ -56,9 +59,7 @@ class _NotexViewState extends State<NotexView> {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
-                    await AuthService.firebase().logOut();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(loginRoute, (_) => false);
+                    context.read<AuthBloc>().add(const AuthEventLogout());
                   }
 
                   break;
