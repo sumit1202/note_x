@@ -61,7 +61,7 @@ class _RegisterViewState extends State<RegisterView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/dash.png',
+                  'assets/images/icon.png',
                   width: 70,
                   height: 70,
                 ),

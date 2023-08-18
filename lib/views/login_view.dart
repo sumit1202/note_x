@@ -60,7 +60,7 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/dash.png',
+                  'assets/images/icon.png',
                   width: 70,
                   height: 70,
                 ),
