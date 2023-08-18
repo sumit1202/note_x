@@ -56,7 +56,7 @@ class _RegisterViewState extends State<RegisterView> {
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -72,6 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
                   controller: _email,
                   enableSuggestions: false,
                   autocorrect: false,
+                  autofocus: true,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(hintText: 'Email'),
                 ),
