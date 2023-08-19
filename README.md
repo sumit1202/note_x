@@ -1,16 +1,24 @@
 # note_x
 
-A new Flutter project.
+A Flutter project on creating a real-time notes application.
 
-## Getting Started
+# Screenshots:
 
-This project is a starting point for a Flutter application.
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 22](https://github.com/sumit1202/note_x/assets/31153960/c581168d-fcb3-4ff1-b359-7fa5d542385e)
 
-A few resources to get you started if this is your first Flutter project:
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 48 44](https://github.com/sumit1202/note_x/assets/31153960/7c95c24a-3b25-4969-8464-efb973e5f0e1)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 18](https://github.com/sumit1202/note_x/assets/31153960/05e76256-9d29-4a8b-9721-fdd007cdb0c7)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 40](https://github.com/sumit1202/note_x/assets/31153960/24399cba-c7ad-495d-9604-a095db19143f)
+
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 46 16](https://github.com/sumit1202/note_x/assets/31153960/a236fc0c-3fef-4df3-8989-490de968537c)
+
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 46 35](https://github.com/sumit1202/note_x/assets/31153960/d30da946-ccb4-4409-990d-10bf8c79116b)
+
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 46 41](https://github.com/sumit1202/note_x/assets/31153960/a26c0d90-bd3c-4a2b-aaf8-78e3cb5f9f91)
+
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 02](https://github.com/sumit1202/note_x/assets/31153960/5a34a608-4894-4f6a-af9f-807bd52504e0)
+
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 13](https://github.com/sumit1202/note_x/assets/31153960/ca520601-2215-4db8-8370-7cbb8cc6bd65)
+
