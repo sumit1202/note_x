@@ -18,6 +18,8 @@ A Flutter project on creating a real-time notes application.
 
 ![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 46 41](https://github.com/sumit1202/note_x/assets/31153960/a26c0d90-bd3c-4a2b-aaf8-78e3cb5f9f91)
 
+![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 18 00 51](https://github.com/sumit1202/note_x/assets/31153960/3029aeed-2e47-4a75-8831-058a881a55bd)
+
 ![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 02](https://github.com/sumit1202/note_x/assets/31153960/5a34a608-4894-4f6a-af9f-807bd52504e0)
 
 ![Simulator Screenshot - iPhone 14 Pro Max - 2023-08-19 at 17 47 13](https://github.com/sumit1202/note_x/assets/31153960/ca520601-2215-4db8-8370-7cbb8cc6bd65)
